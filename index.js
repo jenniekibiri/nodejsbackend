@@ -5,6 +5,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 const bodyParser = require('body-parser')
 const expressValidator= require('express-validator')
+const bcrypt = require('bcryptjs')
+
 
 mongoose.connect(process.env.MONGO_URI,{ useNewUrlParser: true,  useUnifiedTopology: true } ).then(()=>console.log('database connected'))
 .catch((err)=>console.log(`error ${err}`))
@@ -12,9 +14,11 @@ const app= express();
 app.use(expressValidator())
 app.use(morgan('dev'))
 app.use(bodyParser.json())
+
 const postRoutes = require('./routes/posts')
 app.use('/',postRoutes)
 app.use('/posts',postRoutes)
+app.use('/signup',postRoutes)
 app.use('/allposts',postRoutes)
 app.use('/deletepost',postRoutes)
 app.use('/updatepost',postRoutes)
