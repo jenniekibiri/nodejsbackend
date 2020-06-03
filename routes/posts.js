@@ -1,17 +1,13 @@
 const express = require('express');
 const router = express.Router()
-const {getPosts,getAllPosts,deletePosts,updatePost,createPosts} = require('../controllers/post')
-const {signup,signout}= require('../controllers/users')
-const {signin} =require('../controllers/auth')
-const {postValidator,signinValidator} = require('../validator')
+const { getAllPosts, deletePosts, updatePost, createPosts } = require('../controllers/post')
+const { requireSignin } = require('../controllers/auth')
+const { postValidator } = require('../validator')
+const { userById } = require('../controllers/users')
+router.post('/posts', requireSignin, postValidator,  createPosts)
+router.get('/allposts', getAllPosts)
+router.delete('/deletepost', requireSignin,deletePosts)
+router.put('/updatepost',  requireSignin, updatePost)
 
-
-router.get('/',getPosts)
-router.post('/posts',postValidator,createPosts)
-router.post('/signup',signinValidator,signup)
-router.get('/allposts',getAllPosts)
-router.delete('/deletepost',deletePosts)
-router.put('/updatepost',updatePost)
-router.post('/signin',signin)
-router.post('/signout',signout)
+router.param('UserId', userById);
 module.exports = router;

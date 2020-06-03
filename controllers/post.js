@@ -1,20 +1,6 @@
 const Posts = require('../model/post')
-exports.getPosts = (req, res) => {
-    res.json({
-        post: [
-            {
-                "title": "stuck with you",
-                "artist": "justin bieber"
-            },
-            {
-                "title": "stuck with you",
-                "artist": "justin bieber"
-            }]
 
-    }
-    )
-}
-exports.createPosts=(req,res)=>{
+exports.createPosts=(req,res,next)=>{
 const posts = new Posts (req.body)
 posts.save()
 .then((post)=>{
@@ -22,7 +8,7 @@ res.json({post})
 })
 }
 
-exports.getAllPosts=(req,res)=>{
+exports.getAllPosts=(req,res,next)=>{
     Posts.find().then(posts=>{
         res.status(200).json({
             posts:posts
@@ -35,7 +21,7 @@ exports.getAllPosts=(req,res)=>{
     })
     
 }
-exports.deletePosts=(req,res)=>{
+exports.deletePosts=(req,res,next)=>{
     Posts.findByIdAndRemove(req.params.id).then(post=>{
         res.status(200).json({
             message:'post succesfully deleted'
@@ -46,7 +32,7 @@ exports.deletePosts=(req,res)=>{
         })
     })
 }
-exports.updatePost=(req,res)=>{
+exports.updatePost=(req,res,next)=>{
     Posts.findOneAndUpdate(req.params.id,{
        title: req.body.title,
        body:req.body.body

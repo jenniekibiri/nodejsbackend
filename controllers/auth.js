@@ -1,35 +1,37 @@
 const User = require('../model/user')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const expressjwt = require('express-jwt')
 
-exports.signup =async (req, res, next) => {
-    const userExists =await User.findOne({ email: req.body.email })
+exports.signup = async (req, res, next) => {
+    
+    const userExists = await User.findOne({ email: req.body.email })
     if (userExists)
-       return res.status(403).json({
-          error: "email is already taken Login!"
-       });
- 
+        return res.status(403).json({
+            error: "email is already taken Login!"
+        });
+
     bcrypt.hash(req.body.password, 10).then(
-       (hash) => {
-          req.body.password = hash;
-          const user = new User(req.body);
-          user.save()
-             .then(() => {
-                   res.json({
-                      message: 'User added successfully!',
-                      user
- 
-                   });
+        (hash) => {
+            req.body.password = hash;
+            const user = new User(req.body);
+            user.save()
+                .then(() => {
+                    res.json({
+                        message: 'User added successfully!',
+                        user
+
+                    });
                 }
-             ).catch((error) => {
-                res.json({
-                   error
+                ).catch((error) => {
+                    res.json({
+                        error
+                    })
                 })
-             })
-       }
+        }
     );
- };
-exports.signin = (req, res) => {
+};
+exports.signin = (req, res,next) => {
     const { email, password } = req.body
     User.findOne({ email }, (err, user) => {
         if (err || !user) {
@@ -39,20 +41,20 @@ exports.signin = (req, res) => {
             })
         }
 
-        if(user){
-            bcrypt.compare(password,user.password,(err,result)=>{
-              if(!result){
-                res.json({
-                    
-                    message:"password doesnt match"
+        if (user) {
+            bcrypt.compare(password, user.password, (err, result) => {
+                if (!result) {
+                    res.json({
 
-                })
-              }else{
-                  const token = jwt.sign({_id:user._id},process.env.JWT_SECRET);
-                  res.cookie("t",token,{expire:new Date() + 9999 })
-                  const {_id,name,email}=user;
-                  return res.json({token,user:{_id,email,name}})
-              }
+                        message: "password doesnt match"
+
+                    })
+                } else {
+                    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+                    res.cookie("t", token, { expire: new Date() +'7d' })
+                    const { _id, name, email } = user;
+                    return res.json({ token, user: { _id, email, name } })
+                }
             })
         }
 
@@ -60,7 +62,11 @@ exports.signin = (req, res) => {
 
     })
 }
-exports.signout =(req,res)=>{
+exports.signout = (req, res,next) => {
     res.clearCookie("t")
-    return res.json({message:"signout success"})
+    return res.json({ message: "signout success" })
 }
+exports.requireSignin=expressjwt({ secret: process.env.JWT_SECRET,
+userProperty:"auth"}) 
+
+

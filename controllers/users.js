@@ -1,30 +1,25 @@
-
 const User = require('../model/user')
-const bcrypt = require('bcryptjs')
-exports.signup =async (req, res, next) => {
-   const userExists =await User.findOne({ email: req.body.email })
-   if (userExists)
-      return res.status(403).json({
-         error: "email is already taken Login!"
-      });
+exports.userById =(req,res,next,id)=>{
+   User.findOne(id).exec((err,user)=>{
+       if(err || !user){
+           return res.status(400).json({error:"user not found "})
+       }
+       req.profile = user;
+   })
+   next()
+}
+exports.hasAuthorization =(req,res)=>{
+    const authorized =req.profile&&req.auth &&req.profile._id ===req.auth._id;
+    if(!authorized){
+        return res.status(403).json({error:"user is not authorized to perform this action"})
+    }
+}
+exports.allUsers=(req,res,next)=>{
+    User.find((err,user)=>{
+        if(err){
+            return res.status(400).json({error:err})
 
-   bcrypt.hash(req.body.password, 10).then(
-      (hash) => {
-         req.body.password = hash;
-         const user = new User(req.body);
-         user.save()
-            .then(() => {
-                  res.json({
-                     message: 'User added successfully!',
-                     user
-
-                  });
-               }
-            ).catch((error) => {
-               res.json({
-                  error
-               })
-            })
-      }
-   );
-};
+        }
+        res.json({user})
+    }).select('name email created ')
+}
