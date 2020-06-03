@@ -24,6 +24,7 @@ app.use('/signup',postRoutes)
 app.use('/allposts',postRoutes)
 app.use('/deletepost',postRoutes)
 app.use('/updatepost',postRoutes)
+app.use('/signin',postRoutes)
 const port = process.env.PORT || 5000;
 app.listen(port,()=>{
     console.log(`the  server is running on port ${port}`)
