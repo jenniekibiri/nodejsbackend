@@ -9,9 +9,13 @@ required:true
 type:String,
 required:true
      },
+     photo:{
+data:Buffer,
+contentType:String
+     },
      postedBy:{
         type:mongoose.Schema.ObjectId,
-        ref:'User'  
+        ref:'Users'  
      },
      created:{
           type:Date,

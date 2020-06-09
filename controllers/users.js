@@ -13,6 +13,7 @@ exports.userById =(req,res,next,id)=>{
   }
 exports.hasAuthorization =(req,res)=>{
     const authorized =req.profile&&req.auth &&req.profile._id ===req.auth._id;
+    
     if(!authorized){
         return res.status(403).json({error:"user is not authorized to perform this action"})
     }
@@ -27,6 +28,7 @@ exports.allUsers=(req,res,next)=>{
     }).select('name email created updated')
 }
 exports.getUser=(req,res)=>{
+    console.log('req.auth'+ req.auth)
 req.profile.password = undefined
   return  res.json(req.profile);
 
