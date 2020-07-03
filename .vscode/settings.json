@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/aba39cbf-11b5-47b8-8184-535618e17471/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/socialize",
+    "appService.deploySubpath": "."
+}
