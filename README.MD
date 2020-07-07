@@ -1,5 +1,4 @@
 # Social networking app 
-=======================
 
 ## technologies 
 * nodejs
@@ -29,8 +28,8 @@ Test the routes with postman
 
    }
    ```
-   
-   * clone the to your desktop
+
+   * clone to your desktop
    * npm install
    * npm run dev
 
