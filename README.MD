@@ -1,4 +1,17 @@
-{
+# Social networking app 
+=======================
+
+## technologies 
+* nodejs
+* mongoDb
+* Reactjs
+* express js
+
+# Apis
+Test the routes with postman
+-----------------------------
+```
+   {
     "/":"api docs",
     "/signup":"signup",
     "/signin":"signin",
@@ -6,7 +19,7 @@
     "/users":"get all users",
     "/users/:UserId":"get user",
     "/user/:userId":"update user",
-    "/User/:userId":"delete user",
+    "/user/:userId":"delete user",
     "/posts":"getall posts",
     "/posts/new/:UserId":"create a new post",
     "/posts/by/:UserId":"get posts by user",
@@ -14,8 +27,11 @@
     "/deletepost/:postId":"delete post"
   
 
+   }
+   ```
+   
+   * clone the to your desktop
+   * npm install
+   * npm run dev
 
 
-
-
-}
