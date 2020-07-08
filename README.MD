@@ -1,14 +1,16 @@
-# Social networking app 
+# Social networking app
 
-## technologies 
-* nodejs
-* mongoDb
-* Reactjs
-* express js
+## technologies
+
+- nodejs
+- mongoDb
+- Reactjs
+- express js
 
 # Apis
-Test the routes with postman
------------------------------
+
+## Test the routes with postman
+
 ```
    {
     "/":"api docs",
@@ -24,13 +26,11 @@ Test the routes with postman
     "/posts/by/:UserId":"get posts by user",
     "/updatepost/:postId":"update post",
     "/deletepost/:postId":"delete post"
-  
+
 
    }
-   ```
+```
 
-   * clone to your desktop
-   * npm install
-   * npm run dev
-
-
+- clone to your desktop
+- npm install
+- npm start

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "npm": "6.10.0",
-    "node": "12.7.0"
+    "npm": "5.6.0",
+    "node": "10.0.0"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -28,7 +28,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
