@@ -1,5 +1,5 @@
 exports.postValidator = (req, res, next) => {
-  //title validation
+  // title validation
   req.check("title", "enter title").notEmpty();
   req.check("title", "please the title that is between 4 and 150").isLength({
     min: 4,
@@ -10,9 +10,9 @@ exports.postValidator = (req, res, next) => {
     min: 4,
     max: 2000,
   });
-  //check for errors
+  // check for errors
   const errors = req.validationErrors();
-  //show errors as they appear
+  // show errors as they appear
   if (errors) {
     const firstError = errors.map((error) => error.msg)[0];
     return res.status(400).json({
@@ -41,7 +41,7 @@ exports.signinValidator = (req, res, next) => {
     .matches(/\d/)
     .withMessage("password must contain a number");
   const errors = req.validationErrors();
-  //show errors as they appear
+  // show errors as they appear
   if (errors) {
     const firstError = errors.map((error) => error.msg)[0];
     return res.status(400).json({

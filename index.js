@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+
 dotenv.config();
 const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
@@ -28,6 +29,7 @@ app.use(cookieParser());
 const postRoutes = require("./routes/posts");
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
+
 app.use("/", postRoutes);
 app.use("/", authRoutes);
 app.use("/", userRoutes);
@@ -41,13 +43,13 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use(function (err, req, res, next) {
+app.use((err, req, res) => {
   if (err.name === "UnauthorizedError") {
     res.status(401).json({ error: "Unauthorized " });
   }
 });
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`the  server is running on port ${port}`);
 });
