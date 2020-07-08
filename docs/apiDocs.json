@@ -13,9 +13,4 @@
     "/updatepost/:postId":"update post",
     "/deletepost/:postId":"delete post"
   
-
-
-
-
-
 }

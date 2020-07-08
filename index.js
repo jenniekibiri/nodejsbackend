@@ -1,50 +1,53 @@
-const express = require('express');
-const morgan = require('morgan');
-const mongoose = require('mongoose')
-const dotenv = require('dotenv');
+const express = require("express");
+const morgan = require("morgan");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 dotenv.config();
-const bodyParser = require('body-parser')
-const expressValidator = require('express-validator')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const cors  = require('cors')
-const fs = require('fs')
+const bodyParser = require("body-parser");
+const expressValidator = require("express-validator");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const cors = require("cors");
+const fs = require("fs");
 
-const cookieParser = require('cookie-parser')
+const cookieParser = require("cookie-parser");
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => console.log('database connected'))
-    .catch((err) => console.log(`error ${err}`))
-const app = express();
-app.use(expressValidator())
-app.use(morgan('dev'))
-app.use(cors())
-app.use(bodyParser.json())
-app.use(cookieParser())
-const postRoutes = require('./routes/posts')
-const authRoutes = require('./routes/auth')
-const userRoutes = require('./routes/users')
-app.use('/', postRoutes)
-app.use('/', authRoutes)
-app.use('/', userRoutes)
-app.get('/',(req,res)=>{
-  fs.readFile("docs/apiDocs.json",(err,data)=>{
-      if (err){
-          res.status(400).json({error:err
-        })
-      }
-      const docs = JSON.parse(data);
-      res.json(docs)
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
- 
-})
+  .then(() => console.log("database connected"))
+  .catch((err) => console.log(`error ${err}`));
+const app = express();
+app.use(expressValidator());
+app.use(morgan("dev"));
+app.use(cors());
+app.use(bodyParser.json());
+app.use(cookieParser());
+const postRoutes = require("./routes/posts");
+const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/users");
+app.use("/", postRoutes);
+app.use("/", authRoutes);
+app.use("/", userRoutes);
+app.get("/", (req, res) => {
+  fs.readFile("docs/apiDocs.json", (err, data) => {
+    if (err) {
+      res.status(400).json({ error: err });
+    }
+    const docs = JSON.parse(data);
+    res.json(docs);
+  });
+});
 
 app.use(function (err, req, res, next) {
-    if (err.name === 'UnauthorizedError') {
-        res.status(401).json({ error: 'Unauthorized ' });
-    }
+  if (err.name === "UnauthorizedError") {
+    res.status(401).json({ error: "Unauthorized " });
+  }
 });
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
-    console.log(`the  server is running on port ${port}`)
-})
+  console.log(`the  server is running on port ${port}`);
+});
