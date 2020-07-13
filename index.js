@@ -10,9 +10,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const fs = require("fs");
-
 const cookieParser = require("cookie-parser");
-
+const app = express();
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -20,7 +19,7 @@ mongoose
   })
   .then(() => console.log("database connected"))
   .catch((err) => console.log(`error ${err}`));
-const app = express();
+
 app.use(expressValidator());
 app.use(morgan("dev"));
 app.use(cors());
