@@ -33,6 +33,6 @@
 
 - clone to your desktop
 - npm install
-- npm run dev
+- npm start
 
 https://letsnetwork.herokuapp.com/
