@@ -27,7 +27,7 @@ exports.allUsers = (req, res, next) => {
     if (err) {
       return res.status(400).json({ error: err });
     }
-    res.json({ user });
+    res.json(user );
   }).select("name email created updated");
 };
 exports.getUser = (req, res) => {
