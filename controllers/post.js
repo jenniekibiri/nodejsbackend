@@ -28,7 +28,7 @@ exports.createPosts = (req, res, next) => {
     }
     const post = new Posts(fields);
     req.profile.password = undefined;
-
+    console.log(req.profile);
     post.postedBy = req.profile;
     if (files.photo) {
       post.photo.data = fs.readFileSync(files.photo.path);
@@ -50,6 +50,7 @@ exports.getAllPosts = (req, res, next) => {
     .populate("postedBy", "_id name")
     .select("_id title body")
     .then((posts) => {
+      console.log(posts);
       res.status(200).json(posts);
     })
     .catch((err) => {
