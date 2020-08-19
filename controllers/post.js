@@ -26,6 +26,7 @@ exports.createPosts = (req, res, next) => {
         error: "image could not be uploaded",
       });
     }
+    
     const post = new Posts(fields);
     req.profile.password = undefined;
     post.postedBy = req.profile;
