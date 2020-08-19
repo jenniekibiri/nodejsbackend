@@ -28,7 +28,6 @@ exports.createPosts = (req, res, next) => {
     }
     const post = new Posts(fields);
     req.profile.password = undefined;
-    console.log(req.profile);
     post.postedBy = req.profile;
     if (files.photo) {
       post.photo.data = fs.readFileSync(files.photo.path);
