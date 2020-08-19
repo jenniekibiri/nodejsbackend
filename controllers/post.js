@@ -50,9 +50,7 @@ exports.getAllPosts = (req, res, next) => {
     .populate("postedBy", "_id name")
     .select("_id title body")
     .then((posts) => {
-      res.status(200).json({
-        posts,
-      });
+      res.status(200).json(posts);
     })
     .catch((err) => {
       res.status(400).json({
