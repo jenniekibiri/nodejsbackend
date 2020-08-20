@@ -5,31 +5,34 @@ const expressjwt = require("express-jwt");
 const User = require("../model/user");
 exports.socialLogin = (req, res) => {
   let user = User.findOne({ email: req.body }, (err, user) => {
+  
     if (err || !user) {
-      user = new User(req.body)
-      req.body = user
+      user = new User(req.body);
+      req.body = user;
       user.save();
-      const token = jwt.sign({ _id: user._id, iss: "NODEAPI" }, process.env.JWT_SECRET)
+      const token = jwt.sign(
+        { _id: user._id, iss: "NODEAPI" },
+        process.env.JWT_SECRET
+      );
       res.cookie("t", token, { expire: new Date() + 9999 });
       const { _id, name, email } = user;
- return res.json({token,user:{_id,name,email}})
+      return res.json({ token, user: { _id, name, email } });
     } else {
       req.profile = user;
-      user = _.extend(user.req.body)
-      user.updated = Date.now()
-      user.save()
-      const token = jwt.sign({ _id: user._id, iss: "NODEAPI" }, process.env.JWT_SECRET);
-      res.cookie("t",token,{expire:new Date()+9999});
-      //extendscreates a copy of all propertied of source over destination and return object 
+      user = _.extend(user.req.body);
+      user.updated = Date.now();
+      user.save();
+      const token = jwt.sign(
+        { _id: user._id, iss: "NODEAPI" },
+        process.env.JWT_SECRET
+      );
+      res.cookie("t", token, { expire: new Date() + 9999 });
+      //extendscreates a copy of all propertied of source over destination and return object
       const { _id, name, email } = user;
-      return res.json({token,user:{_id,name,email}})
+      return res.json({ token, user: { _id, name, email } });
     }
- })  
-
-
- }
-
-
+  });
+};
 
 exports.signup = async (req, res, next) => {
   const userExists = await User.findOne({ email: req.body.email });
