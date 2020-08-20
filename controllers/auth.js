@@ -19,7 +19,7 @@ exports.socialLogin = (req, res) => {
       return res.json({ token, user: { _id, name, email } });
     } else {
       req.profile = user;
-      user = _.extend(user.req.body);
+      user = _.extend(user, req.body);
       user.updated = Date.now();
       user.save();
       const token = jwt.sign(
