@@ -2,9 +2,11 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const expressjwt = require("express-jwt");
+const _ = require("lodash");
 const User = require("../model/user");
 exports.socialLogin = (req, res) => {
-  let user = User.findOne({ email: req.body }, (err, user) => {
+  let email = req.body.email;
+  let user = User.findOne({ email }, (err, user) => {
     if (err || !user) {
       user = new User(req.body);
       req.body = user;
