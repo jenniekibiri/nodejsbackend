@@ -5,7 +5,6 @@ const expressjwt = require("express-jwt");
 const User = require("../model/user");
 exports.socialLogin = (req, res) => {
   let user = User.findOne({ email: req.body }, (err, user) => {
-  
     if (err || !user) {
       user = new User(req.body);
       req.body = user;
@@ -18,16 +17,18 @@ exports.socialLogin = (req, res) => {
       const { _id, name, email } = user;
       return res.json({ token, user: { _id, name, email } });
     } else {
+      // update existing user with new social info and login
       req.profile = user;
       user = _.extend(user, req.body);
       user.updated = Date.now();
       user.save();
+      // generate a token with user id and secret
       const token = jwt.sign(
         { _id: user._id, iss: "NODEAPI" },
         process.env.JWT_SECRET
       );
       res.cookie("t", token, { expire: new Date() + 9999 });
-      //extendscreates a copy of all propertied of source over destination and return object
+      // return response with user and token to frontend client
       const { _id, name, email } = user;
       return res.json({ token, user: { _id, name, email } });
     }
