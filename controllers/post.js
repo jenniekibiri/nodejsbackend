@@ -48,7 +48,7 @@ exports.createPosts = (req, res, next) => {
 exports.getAllPosts = (req, res, next) => {
   Posts.find()
     .populate("postedBy", "_id name")
-    .select("_id title body created photo")
+    .select("_id title body created")
     .then((posts) => {
       console.log(posts);
       res.status(200).json(posts);
