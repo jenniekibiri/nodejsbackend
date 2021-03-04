@@ -16,7 +16,10 @@ exports.postById = (req, res, next, id) => {
       next();
     });
 };
-
+exports.getPost = (req, res) => {
+  
+  return res.json(req.post);
+}
 exports.createPosts = (req, res, next) => {
   const form = formidable.IncomingForm();
   form.keepExtensions = true;
@@ -122,3 +125,4 @@ exports.updatePost = (req, res, next) => {
     res.json(post);
   });
 };
+
